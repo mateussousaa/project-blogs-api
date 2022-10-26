@@ -20,4 +20,6 @@ const insertUser = async (userInfo) => {
   return { type: null, message: token };
 };
 
-module.exports = { insertUser };
+const getUsers = async () => User.findAll({ attributes: { exclude: ['password'] } });
+
+module.exports = { insertUser, getUsers };
