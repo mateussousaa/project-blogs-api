@@ -1,9 +1,8 @@
 const jwt = require('../utils/jwt');
 
 const authMiddleware = (req, res, next) => {
-  console.log('aaaaa');
   const { authorization } = req.headers;
-  
+
   if (!authorization) {
     return res
       .status(401)
