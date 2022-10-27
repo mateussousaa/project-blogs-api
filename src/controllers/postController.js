@@ -49,4 +49,31 @@ const updatePostById = async (req, res) => {
   res.status(200).json(updatedPost);
 };
 
-module.exports = { insertPost, getPosts, getPostsById, updatePostById };
+const deletePostById = async (req, res) => {
+  const { id } = req.params;
+  const { user } = req;
+  const post = await postService.getPostsById(Number(id));
+  if (!post) {
+    return res
+    .status(mapError('POST_DOESNT_EXIST'))
+    .json({ message: 'Post does not exist' });
+  }
+
+  if (user.id !== post.userId) {
+    return res
+      .status(mapError('UNAUTHORIZED_USER'))
+      .json({ message: 'Unauthorized user' });
+  }
+
+  await postService.deletePostById(Number(id));
+
+  res.status(204).json();
+};
+
+module.exports = { 
+  insertPost,
+  getPosts,
+  getPostsById,
+  updatePostById,
+  deletePostById,
+};
