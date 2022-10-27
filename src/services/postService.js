@@ -7,4 +7,11 @@ const getPosts = async () => BlogPost.findAll({
   ],
 });
 
-module.exports = { getPosts };
+const getPostsById = async (id) => BlogPost.findByPk(id, {
+  include: [
+    { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ],
+});
+
+module.exports = { getPosts, getPostsById };

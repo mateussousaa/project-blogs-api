@@ -6,6 +6,7 @@ const errorMap = {
   INVALID_TOKEN: 401,
   FIELDS_ARE_MISSING: 400,
   USER_SCHEMA_INVALID: 400,
+  POST_DOESNT_EXIST: 400,
 };
 
 const mapError = (type) => errorMap[type] || 500;

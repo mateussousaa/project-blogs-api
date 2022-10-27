@@ -9,4 +9,6 @@ router.use(authMiddleware);
 
 router.get('/', postController.getPosts);
 
+router.get('/:id', postController.getPostsById);
+
 module.exports = router;
