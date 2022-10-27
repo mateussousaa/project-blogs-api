@@ -22,4 +22,10 @@ const insertUser = async (userInfo) => {
 
 const getUsers = async () => User.findAll({ attributes: { exclude: ['password'] } });
 
-module.exports = { insertUser, getUsers };
+const getUserById = async (id) => {
+  const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
+  if (!user) return { type: 'USER_DOESNT_EXIST', message: 'User does not exist' };
+  return { type: null, message: user };
+};
+
+module.exports = { insertUser, getUsers, getUserById };

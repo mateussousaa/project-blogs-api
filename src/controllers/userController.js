@@ -5,12 +5,23 @@ const insertUser = async (req, res) => {
   const { type, message } = await userService.insertUser(req.body);
 
   if (type) return res.status(mapError(type)).json({ message });
+
   res.status(201).json({ token: message });
 };
 
-const getUsers = async (req, res) => {
+const getUsers = async (_req, res) => {
   const users = await userService.getUsers();
   res.status(200).json(users);
 };
 
-module.exports = { insertUser, getUsers };
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+
+  const { type, message } = await userService.getUserById(Number(id));
+
+  if (type) return res.status(mapError(type)).json({ message });
+
+  res.status(200).json(message);
+};
+
+module.exports = { insertUser, getUsers, getUserById };
