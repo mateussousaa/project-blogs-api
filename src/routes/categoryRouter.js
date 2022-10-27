@@ -10,4 +10,6 @@ router.use(authMiddleware);
 
 router.post('/', verifyCategorySchema, categoryController.insertCategory);
 
+router.get('/', categoryController.getCategories);
+
 module.exports = router;
