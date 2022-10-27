@@ -1,3 +1,4 @@
+const mapError = require('../utils/errorMap');
 const jwt = require('../utils/jwt');
 
 const authMiddleware = (req, res, next) => {
@@ -5,7 +6,7 @@ const authMiddleware = (req, res, next) => {
 
   if (!authorization) {
     return res
-      .status(401)
+      .status(mapError('INVALID_TOKEN'))
       .json({ message: 'Token not found' }); 
   }
 
@@ -13,7 +14,7 @@ const authMiddleware = (req, res, next) => {
 
   if (type) {
     return res
-      .status(401)
+      .status(mapError('INVALID_TOKEN'))
       .json({ message });
   }
 

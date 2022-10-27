@@ -7,8 +7,10 @@ const router = express.Router();
 
 router.post('/', verifyUserSchema, userController.insertUser);
 
-router.get('/', authMiddleware, userController.getUsers);
+router.use(authMiddleware);
 
-router.get('/:id', authMiddleware, userController.getUserById);
+router.get('/', userController.getUsers);
+
+router.get('/:id', userController.getUserById);
 
 module.exports = router;

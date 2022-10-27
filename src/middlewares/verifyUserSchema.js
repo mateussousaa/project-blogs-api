@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const mapError = require('../utils/errorMap');
 
 const verifyUserSchema = (req, res, next) => {
   const userSchema = Joi.object({
@@ -10,11 +11,10 @@ const verifyUserSchema = (req, res, next) => {
 
   const { error } = userSchema.validate(req.body);
 
-  console.log(error);
   if (error) {
     const { message } = error.details[0];
     return res
-      .status(400)
+      .status(mapError('USER_SCHEMA_INVALID'))
       .json({ message });
   } 
   
