@@ -11,13 +11,13 @@ const authMiddleware = (req, res, next) => {
   }
 
   const { type, message } = jwt.validateToken(authorization);
-
   if (type) {
     return res
       .status(mapError('INVALID_TOKEN'))
       .json({ message });
   }
 
+  req.user = message;
   next();
 };
 

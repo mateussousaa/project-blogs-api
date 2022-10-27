@@ -7,6 +7,7 @@ const errorMap = {
   FIELDS_ARE_MISSING: 400,
   USER_SCHEMA_INVALID: 400,
   POST_DOESNT_EXIST: 400,
+  CATEGORYIDS_NOT_FOUND: 400,
 };
 
 const mapError = (type) => errorMap[type] || 500;
