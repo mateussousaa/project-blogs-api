@@ -9,6 +9,8 @@ const insertPost = async (req, res) => {
   
   const { type, message } = await postService.insertPost(post, post.categoryIds);
   
+  console.log(message);
+
   if (type) {
     return res
       .status(mapError(type))
@@ -31,4 +33,20 @@ const getPostsById = async (req, res) => {
   res.status(200).json(post);
 };
 
-module.exports = { insertPost, getPosts, getPostsById };
+const updatePostById = async (req, res) => {
+  const { id } = req.params;
+  const { user } = req;
+  const { title, content } = req.body;
+  const post = await postService.getPostsById(Number(id));
+  if (user.id !== post.userId) {
+    return res
+      .status(mapError('UNAUTHORIZED_USER'))
+      .json({ message: 'Unauthorized user' });
+  }
+
+  await postService.updatePostById({ title, content }, post.id);
+  const updatedPost = await postService.getPostsById(Number(id));
+  res.status(200).json(updatedPost);
+};
+
+module.exports = { insertPost, getPosts, getPostsById, updatePostById };

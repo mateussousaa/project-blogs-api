@@ -16,7 +16,6 @@ const insertPost = async (post, categories) => {
 
       return createdPost.dataValues;
     });
-
     return { type: null, message: result };
   } catch (e) {
     return { type: 'CATEGORYIDS_NOT_FOUND', message: 'one or more "categoryIds" not found' };
@@ -37,4 +36,9 @@ const getPostsById = async (id) => BlogPost.findByPk(id, {
   ],
 });
 
-module.exports = { insertPost, getPosts, getPostsById };
+const updatePostById = async ({ title, content }, id) => {
+  const [affectedRows] = await BlogPost.update({ title, content }, { where: { id } });
+  return affectedRows;
+};
+
+module.exports = { insertPost, getPosts, getPostsById, updatePostById };
