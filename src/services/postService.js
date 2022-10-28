@@ -52,6 +52,7 @@ const getPostsByTerm = async (term) => {
   });
   return blogs;
 };
+
 const updatePostById = async ({ title, content }, id) => {
   const [affectedRows] = await BlogPost.update({ title, content }, { where: { id } });
   return affectedRows;
