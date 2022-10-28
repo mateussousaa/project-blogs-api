@@ -33,6 +33,12 @@ const getPostsById = async (req, res) => {
   res.status(200).json(post);
 };
 
+const getPostsByTerm = async (req, res) => {
+  const { q } = req.query;
+  const blogs = await postService.getPostsByTerm(q);
+  res.status(200).json(blogs);
+};
+
 const updatePostById = async (req, res) => {
   const { id } = req.params;
   const { user } = req;
@@ -74,6 +80,7 @@ module.exports = {
   insertPost,
   getPosts,
   getPostsById,
+  getPostsByTerm,
   updatePostById,
   deletePostById,
 };

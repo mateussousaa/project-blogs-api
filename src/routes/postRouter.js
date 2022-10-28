@@ -11,6 +11,8 @@ router.use(authMiddleware);
 
 router.post('/', verifyPostSchema, postController.insertPost);
 
+router.get('/search', postController.getPostsByTerm);
+
 router.get('/', postController.getPosts);
 
 router.get('/:id', postController.getPostsById);

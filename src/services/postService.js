@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, User, PostCategory, Category, sequelize } = require('../models');
 
 const insertPost = async (post, categories) => {
@@ -36,6 +37,21 @@ const getPostsById = async (id) => BlogPost.findByPk(id, {
   ],
 });
 
+const getPostsByTerm = async (term) => {
+  const blogs = BlogPost.findAll({
+     where: {
+      [Op.or]: [
+      { title: { [Op.substring]: term } },
+      { content: { [Op.substring]: term } },
+      ],
+    },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  return blogs;
+};
 const updatePostById = async ({ title, content }, id) => {
   const [affectedRows] = await BlogPost.update({ title, content }, { where: { id } });
   return affectedRows;
@@ -47,6 +63,7 @@ module.exports = {
   insertPost,
   getPosts,
   getPostsById,
+  getPostsByTerm,
   updatePostById,
   deletePostById,
  };
